@@ -4,7 +4,7 @@
 
 #include <string.h>
 #include <stdio.h>
-#include "utilities.h"
+#include "retreivers/common/utilities.h"
 
 void                add_id_to_list(t_player **user, char *id)
 {
@@ -115,4 +115,44 @@ e_bool              is_player_link(char *all)
         return true;
     }
     return false;
+}
+
+e_bool              contain_string(const char *ref, const char *str)
+{
+    int             i;
+    size_t          ref_len;
+    size_t          str_len;
+
+    i = 0;
+    ref_len = strlen(ref);
+    str_len = strlen(str);
+    while ((i + ref_len) < str_len)
+    {
+        if (!strncmp(ref, str, ref_len))
+        {
+            return (true);
+        }
+        ++i;
+    }
+    return (false);
+}
+
+int                 find_string(const char *ref, const char *str)
+{
+    int             i;
+    size_t          ref_len;
+    size_t          str_len;
+
+    i = 0;
+    ref_len = strlen(ref);
+    str_len = strlen(str);
+    while ((i + ref_len) < str_len)
+    {
+        if (!strncmp(ref, str, ref_len))
+        {
+            return (i);
+        }
+        ++i;
+    }
+    return (-1);
 }

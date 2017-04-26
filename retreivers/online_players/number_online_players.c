@@ -2,7 +2,7 @@
 // Created by glastis on 09/04/17.
 //
 
-#include "online_players.h"
+#include "retreivers/online_players/online_players.h"
 #include <string.h>
 
 int             get_number_online_players(char *raw_page)

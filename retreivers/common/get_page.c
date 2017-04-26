@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
-#include "common.h"
+#include "retreivers/common/common.h"
 
 static void     init_string(t_string *s)
 {

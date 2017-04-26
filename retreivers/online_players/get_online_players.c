@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "online_players.h"
-#include "../common/utilities.h"
+#include "retreivers/online_players/online_players.h"
+#include "retreivers/common/utilities.h"
 
 static t_player         **init_player_tab(int nb_players)
 {
@@ -57,6 +57,27 @@ static void         get_id(t_player **user, char *all, size_t page_len)
     }
 }
 
+static void         add_player_link(t_player **player)
+{
+    int             i;
+    size_t          len;
+
+    i = 0;
+    while (player[i])
+    {
+        len = strlen(player[i]->id) + sizeof(PLAYER_LINK_REFERENCE) + sizeof(WEB_PAGE_EXTENTION) - 1;
+        if (!(player[i]->player_link = malloc(len * sizeof(char))))
+        {
+            return;
+        }
+        memcpy(&player[i]->player_link[0], PLAYER_LINK_REFERENCE, sizeof(PLAYER_LINK_REFERENCE) - 1);
+        memcpy(&player[i]->player_link[sizeof(PLAYER_LINK_REFERENCE) - 1], player[i]->id, strlen(player[i]->id));
+        memcpy(&player[i]->player_link[len - sizeof(WEB_PAGE_EXTENTION)], WEB_PAGE_EXTENTION, sizeof(WEB_PAGE_EXTENTION) - 1);
+        player[i]->player_link[len - 1] = '\0';
+        ++i;
+    }
+}
+
 t_player            **get_online_players_infos()
 {
     t_player        **player;
@@ -72,6 +93,7 @@ t_player            **get_online_players_infos()
         return NULL;
     get_id(player, onl_play_page, page_len);
     free(onl_play_page);
+    add_player_link(player);
     return (player);
 }
 
